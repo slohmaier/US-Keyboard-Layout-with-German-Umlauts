@@ -1,5 +1,5 @@
-US-Keyboard-Layout-with-German-Umlauts
-======================================
+# US-Keyboard-Layout-with-German-Umlauts
+
 This project provides keyboardlayouts and instructions to achieve:
 
  - Deactivate Caps Lock
@@ -12,18 +12,19 @@ This project provides keyboardlayouts and instructions to achieve:
  - CapsLock + Shift + u = Ü
  - CapsLock + Shift + o = Ö
 
-Install Instructions
-====================
+## Install Instructions
 
 All OS Instructions depend on you having US keyboard Layout selected.
 
-Linux
------
+#### Linux
+
  - Copy <code>Linux/Xmodmap</code> to <code>~/.Xmodmap</code>
  - Run <code>xmodmap ~/.Xmodmap</code> (You can add this to e.g. gnome-session-properties)
 
-Windows
--------
+### Windows
+
+#### Alternative a
+
  - Extract <code>Windows/US_German_Umlauts.zip</code>
  - Run <code>setup.exe</code>
  - Go to "Control Panel" -> "Change keyboards or input methods"
@@ -34,8 +35,17 @@ Windows
  - Map CapsLock to Right Alt
  - Reboot
 
-OSX
----
+#### Alternative b
+ - Download and install AutoHotkey Version 1.x (v2 will work with different Syntax)
+ - Copy the script file `*.ahk`
+ - Right-click on the Start button and choose `Explore All Users`
+ - Navigate to the Startup folder inside the Programs folder and paste the script file
+ - The shortcut to the script should now be in the Startup folder
+ - After reboot it should work, without reboot just Double-Click on the script file
+
+
+###OSX
+
  - Download <code>OSX/US German Umlauts.keylayout</code>
  - Open a Terminal and got to the folder of the download (e.g. <code>cd ~/Downloads</code> ) .
  - Now enter: <code>sudo cp US\ German\ Umlauts.keylayout /Library/Keyboard\ Layouts</code>
