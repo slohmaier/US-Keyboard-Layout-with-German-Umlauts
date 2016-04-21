@@ -1,4 +1,4 @@
-; Remap Umlaute
+﻿; Remap Umlaute
 ; http://www.autohotkey.com/
 ; 2016-03-31
 
