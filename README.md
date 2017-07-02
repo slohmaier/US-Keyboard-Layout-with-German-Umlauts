@@ -25,6 +25,8 @@ All OS Instructions depend on you having US keyboard Layout selected.
 
 #### Alternative a
 
+(Made with Microsoft Keyboard Layout Creator 1.4 https://www.microsoft.com/en-us/download/details.aspx?id=22339 )
+
  - Extract <code>Windows/US_German_Umlauts.zip</code>
  - Run <code>setup.exe</code>
  - Go to "Control Panel" -> "Change keyboards or input methods"
@@ -46,9 +48,10 @@ All OS Instructions depend on you having US keyboard Layout selected.
 
 ###OSX
 
- - Download <code>OSX/US German Umlauts.keylayout</code>
- - Open a Terminal and got to the folder of the download (e.g. <code>cd ~/Downloads</code> ) .
- - Now enter: <code>sudo cp US\ German\ Umlauts.keylayout /Library/Keyboard\ Layouts</code>
+(Made with Ukulele http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ukelele)
+
+ - Download <code>U.S. German Umlauts.dmg</code>
+ - Follow the copy recommendation in the DMG-container.
  - (You may need to enter your login password)
  - Reboot
  - Go to "System Preferences" -> "Keyboard" -> "Input Sources"
