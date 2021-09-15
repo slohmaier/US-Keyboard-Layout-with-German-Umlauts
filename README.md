@@ -16,7 +16,7 @@ This project provides keyboardlayouts and instructions to achieve:
 
 All OS Instructions depend on you having US keyboard Layout selected.
 
-#### Linux
+### Linux
 
  - Copy <code>Linux/Xmodmap</code> to <code>~/.Xmodmap</code>
  - Run <code>xmodmap ~/.Xmodmap</code> (You can add this to e.g. gnome-session-properties)
@@ -46,7 +46,7 @@ All OS Instructions depend on you having US keyboard Layout selected.
  - After reboot it should work, without reboot just Double-Click on the script file
 
 
-###OSX
+### OSX
 
 (Made with Ukulele http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ukelele)
 
