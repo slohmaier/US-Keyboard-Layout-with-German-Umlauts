@@ -1,6 +1,11 @@
-﻿SetCapsLockState AlwaysOff
+﻿; Remap Umlaute
+; http://www.autohotkey.com/
+; 2016-03-31
 
->! & a::
+SetCapsLockState AlwaysOff
+
+; Umlaut a
+Alt & a::
 	GetKeyState, state, Shift
 	If state = D
 		Send, Ä
@@ -8,7 +13,8 @@
 		Send, ä
 Return
 
->! & u::
+; Umlaut u
+Alt & u::
 	GetKeyState, state, Shift
 	If state = D
 		Send, Ü
@@ -16,7 +22,8 @@ Return
 		Send, ü
 Return
 
->! & o::
+; Umlaut o
+Alt & o::
 	GetKeyState, state, Shift
 	If state = D
 		Send, Ö
@@ -24,7 +31,8 @@ Return
 		Send, ö
 Return
 
->! & s::Send, ß
->! & e::Send, €
-
-^m::Send {AppsKey}
+; Further Symbols/Umlauts
+Alt & s::Send, ß
+Alt & e::Send, €
+; Example for opening tools:
+; Capslock & c::Run calc.exe
