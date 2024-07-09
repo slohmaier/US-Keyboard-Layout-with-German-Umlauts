@@ -36,3 +36,5 @@ Alt & s::Send, ß
 Alt & e::Send, €
 ; Example for opening tools:
 ; Capslock & c::Run calc.exe
+
+^m::Send {AppsKey}
