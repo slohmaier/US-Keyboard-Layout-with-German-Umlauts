@@ -1,0 +1,19 @@
+// German characters added as third level symbols to the US keyboard layout
+// the german umlauts are placed over the characters without diaeresis, the sharp-s over the s
+// the euro sign is placed over the e, as it is usual for german keyboards
+partial alphanumeric_keys
+xkb_symbols "us_umlauts"  {
+
+    include "us(basic)"
+    include "eurosign(e)"
+    name[Group1] = "English with Umlauts (US)";
+
+    key <AC01> {[ a,          A,          adiaeresis, Adiaeresis ]};
+    key <AD09> {[ o,          O,          odiaeresis, Odiaeresis ]};
+    key <AC02> {[ s,          S,          ssharp,     U1E9E      ]};
+    key <AD07> {[ u,          U,          udiaeresis, Udiaeresis ]};
+    key <AD10> {[ p,          P,          aring,      Aring      ]};
+
+    include "level3(ralt_switch)"
+    include "level3(caps_switch)"
+};
