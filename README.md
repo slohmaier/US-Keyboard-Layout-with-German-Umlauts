@@ -16,14 +16,50 @@ This project provides keyboardlayouts and instructions to achieve:
 
 All OS Instructions depend on you having US keyboard Layout selected.
 
-#### Linux
+### Linux
 
- - Copy <code>Linux/Xmodmap</code> to <code>~/.Xmodmap</code>
+#### Alternative a: Xmodmap
+
+ - Copy <code>Linux/xmodmap/Xmodmap</code> to <code>~/.Xmodmap</code>
  - Run <code>xmodmap ~/.Xmodmap</code> (You can add this to e.g. gnome-session-properties)
+
+#### Alternative b: X11
+
+ - Copy <code>Linux/X11/us_umlauts</code> to <code>/usr/share/X11/xkb/symbols/us_umlauts</code>
+ - Edit <code>/usr/share/X11/xkb/rules/evdev.xml</code> to include the following snippet
+
+   The part is marked with the <code>Start us umlauts</code> and <code>End us umlauts</code> comments.
+   
+   I pasted mine right before the English layout configuration.
+
+```
+  <layoutList>
+    <!-- Start us umlauts -->
+    <layout>
+      <configItem>
+        <name>us_umlauts</name>
+        <shortDescription>en</shortDescription>
+        <description>English (US, with umlauts)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList></variantList>
+    </layout>
+    <!-- End us umlauts -->
+    <layout>
+      <configItem>
+        <name>us</name>
+        <!-- Keyboard indicator for English layouts -->
+        <shortDescription>en</shortDescription>
+        <description>English (US)</description>
+```
+
+ - Select the layout in the <code>Region & Language</code> Input Sources
 
 ### Windows
 
-#### Alternative a
+#### Alternative a: KeyTweak
 
 (Made with Microsoft Keyboard Layout Creator 1.4 https://www.microsoft.com/en-us/download/details.aspx?id=22339 )
 
@@ -37,7 +73,7 @@ All OS Instructions depend on you having US keyboard Layout selected.
  - Map CapsLock to Right Alt
  - Reboot
 
-#### Alternative b
+#### Alternative b: AutoHotkey
  - Download and install AutoHotkey Version 1.x (v2 will work with different Syntax)
  - Copy the script file `*.ahk`
  - Right-click on the Start button and choose `Explore All Users`
@@ -46,7 +82,7 @@ All OS Instructions depend on you having US keyboard Layout selected.
  - After reboot it should work, without reboot just Double-Click on the script file
 
 
-###OSX
+### OSX
 
 (Made with Ukulele http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ukelele)
 
