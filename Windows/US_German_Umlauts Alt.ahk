@@ -1,9 +1,7 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 
-SetCapsLockState "AlwaysOff"
-
-; Umlaut a
-!a:: {
+; Umlaut a (* = fire even with extra modifiers like Shift)
+*!a:: {
     if GetKeyState("Shift", "P")
         Send "Ä"
     else
@@ -11,7 +9,7 @@ SetCapsLockState "AlwaysOff"
 }
 
 ; Umlaut u
-!u:: {
+*!u:: {
     if GetKeyState("Shift", "P")
         Send "Ü"
     else
@@ -19,7 +17,7 @@ SetCapsLockState "AlwaysOff"
 }
 
 ; Umlaut o
-!o:: {
+*!o:: {
     if GetKeyState("Shift", "P")
         Send "Ö"
     else
@@ -27,10 +25,18 @@ SetCapsLockState "AlwaysOff"
 }
 
 ; Further Symbols/Umlauts
-!s::Send "ß"
-!e::Send "€"
+*!s:: {
+    if GetKeyState("Shift", "P")
+        Send "ẞ"
+    else
+        Send "ß"
+}
+*!e::Send "€"
 
 ; Example for opening tools:
 ; CapsLock & c::Run "calc.exe"
 
 ^m::Send "{AppsKey}"
+
+; Screenshot to clipboard
+^!+s::Send "{PrintScreen}"
