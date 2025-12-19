@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 
 set "STARTUP=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "SCRIPT_DIR=%~dp0"
@@ -40,9 +40,14 @@ if %errorlevel%==0 (
     echo.
     echo Copied "%SCRIPT%" to Startup folder.
     echo It will run automatically on next login.
+    echo.
+    set /p "runNow=Start the script now? (Y/N): "
+    if /i "!runNow!"=="Y" (
+        start "" "%STARTUP%\%SCRIPT%"
+        echo Script started.
+    )
 ) else (
     echo.
     echo Failed to copy file.
+    pause
 )
-
-pause

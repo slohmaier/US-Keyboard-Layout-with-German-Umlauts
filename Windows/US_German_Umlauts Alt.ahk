@@ -3,35 +3,35 @@
 ; Umlaut a (* = fire even with extra modifiers like Shift)
 *!a:: {
     if GetKeyState("Shift", "P")
-        Send "Ä"
+        SendText "Ä"
     else
-        Send "ä"
+        SendText "ä"
 }
 
 ; Umlaut u
 *!u:: {
     if GetKeyState("Shift", "P")
-        Send "Ü"
+        SendText "Ü"
     else
-        Send "ü"
+        SendText "ü"
 }
 
 ; Umlaut o
 *!o:: {
     if GetKeyState("Shift", "P")
-        Send "Ö"
+        SendText "Ö"
     else
-        Send "ö"
+        SendText "ö"
 }
 
 ; Further Symbols/Umlauts
 *!s:: {
     if GetKeyState("Shift", "P")
-        Send "ẞ"
+        SendText "ẞ"
     else
-        Send "ß"
+        SendText "ß"
 }
-*!e::Send "€"
+*!e::SendText "€"
 
 ; Example for opening tools:
 ; CapsLock & c::Run "calc.exe"
