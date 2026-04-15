@@ -46,18 +46,30 @@ All OS Instructions depend on you having US keyboard Layout selected.
  - After reboot it should work, without reboot just Double-Click on the script file
 
 
-###OSX
+### macOS
 
 (Made with Ukulele http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ukelele)
 
  - Download <code>U.S. German Umlauts.dmg</code>
- - Follow the copy recommendation in the DMG-container.
- - (You may need to enter your login password)
+ - Copy the keyboard layout to <code>/Library/Keyboard Layouts/</code> (system-wide, recommended) instead of <code>~/Library/Keyboard Layouts/</code>. Installing system-wide allows removing the default US layout.
  - Reboot
- - Go to "System Preferences" -> "Keyboard" -> "Input Sources"
+ - Go to "System Settings" -> "Keyboard" -> "Input Sources" -> "Edit..."
  - Hit the "+" button
  - Go to Others, select "U.S. German Umlauts" and hit the "Add" button
- - Select "U.S. German Umlauts" and exit "System Preferences"
+ - Select "U.S. German Umlauts" and exit System Settings
+
+#### Removing the default US keyboard layout
+
+macOS requires at least one keyboard layout and won't let you remove the last "Latin character" layout via the UI. After adding "U.S. German Umlauts", run the provided script to remove the default US layout:
+
+```bash
+./OSX/remove-us-layout.sh
+```
+
+The script will show your current layouts, ask for confirmation, and remove the US layout. Restart your Mac afterwards.
+
+#### CapsLock as modifier (optional)
+
  - Download and install "PCKeyboardHack" (e.g. from https://pqrs.org/macosx/keyremap4macbook/pckeyboardhack.html.en )
  - Start "PCKeyboardHack"
  - Go to section "Caps Lock"
