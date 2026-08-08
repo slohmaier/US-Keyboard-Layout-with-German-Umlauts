@@ -2,12 +2,19 @@
 #
 # Install US keyboard layout with German umlauts on Linux.
 # Detects the display server and installs the matching configuration:
-#   - Wayland: XKB layout (AltGr modifier) via ~/.config/xkb
+#   - Wayland: XKB layout (AltGr modifier) registered in the system XKB rules
 #   - X11:     Xmodmap (CapsLock modifier) via ~/.Xmodmap
+#
+# Note: GNOME/Wayland resolves layout names only through the system XKB rules
+# (/usr/share/X11/xkb/rules/evdev.xml). The per-user ~/.config/xkb folder is
+# ignored by GNOME, so the layout must be installed system-wide (needs sudo).
 #
 set -euo pipefail
 
-XKB_SYMBOLS="$HOME/.config/xkb/symbols/us_umlauts"
+XKB_SYMBOLS_SRC="$(dirname "$(readlink -f "$0")")/us_umlauts"
+XKB_SYMBOLS_DST="/usr/share/X11/xkb/symbols/us_umlauts"
+XKB_RULES_XML="/usr/share/X11/xkb/rules/evdev.xml"
+XKB_RULES_LST="/usr/share/X11/xkb/rules/evdev.lst"
 XMODMAP_SRC="$(dirname "$(readlink -f "$0")")/Xmodmap"
 XMODMAP_DST="$HOME/.Xmodmap"
 
@@ -22,31 +29,77 @@ detect_session() {
 }
 
 install_wayland() {
-    echo "Wayland erkannt - installiere XKB-Layout (Alt + a = ä, u = ü, o = ö, s = ß, e = €)."
-    mkdir -p "$(dirname "$XKB_SYMBOLS")"
-    cat > "$XKB_SYMBOLS" <<'EOF'
-// US layout with German umlauts on both Alt keys (left and right Alt)
-// Alt + a = ä, Alt + u = ü, Alt + o = ö, Alt + s = ß, Alt + e = €
-// Alt + Shift + a/u/o = Ä/Ü/Ö, Alt + Shift + s = ẞ
-partial alphanumeric_keys
-xkb_symbols "basic" {
-    include "us(basic)"
+    echo "Wayland erkannt - installiere XKB-Layout (AltGr + a = ä, u = ü, o = ö, s = ß, e = €)."
 
-    name[Group1] = "English (US, German Umlauts)";
+    if [[ ! -f "$XKB_SYMBOLS_SRC" ]]; then
+        echo "Fehler: $XKB_SYMBOLS_SRC nicht gefunden." >&2
+        exit 1
+    fi
 
-    // Both Alt keys act as Level3 modifier (like AltGr)
-    key <LALT> { [ Alt_L, ISO_Level3_Shift ] };
-    key <RALT> { [ Alt_R, ISO_Level3_Shift ] };
+    # A stale per-user copy under ~/.config/xkb would shadow the system-wide
+    # file (libxkbcommon prefers the user path). Remove it if present.
+    if [[ -f "$HOME/.config/xkb/symbols/us_umlauts" ]]; then
+        echo "Entferne veraltete User-Datei $HOME/.config/xkb/symbols/us_umlauts ..."
+        rm -f "$HOME/.config/xkb/symbols/us_umlauts"
+        rmdir "$HOME/.config/xkb/symbols" "$HOME/.config/xkb" 2>/dev/null || true
+    fi
 
-    key <AD01> { [ q, Q, ä, Ä ] };
-    key <AD03> { [ e, E, €, € ] };
-    key <AD07> { [ u, U, ü, Ü ] };
-    key <AD09> { [ o, O, ö, Ö ] };
-    key <AC01> { [ a, A, ä, Ä ] };
-    key <AC02> { [ s, S, ß, ẞ ] };
-};
-EOF
-    echo "XKB-Datei geschrieben: $XKB_SYMBOLS"
+    echo "Kopiere Symbols-Datei nach $XKB_SYMBOLS_DST (sudo)..."
+    sudo cp "$XKB_SYMBOLS_SRC" "$XKB_SYMBOLS_DST"
+
+    echo "Registriere Layout in $XKB_RULES_XML (sudo)..."
+    sudo python3 - "$XKB_RULES_XML" <<'PYEOF'
+import sys
+p = sys.argv[1]
+with open(p) as f:
+    content = f.read()
+block = '''    <layout>
+      <configItem>
+        <name>us_umlauts</name>
+        <shortDescription>en</shortDescription>
+        <description>English (US, German Umlauts)</description>
+        <countryList>
+          <iso3166Id>US</iso3166Id>
+        </countryList>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+    </layout>
+'''
+needle = '''    <layout>
+      <configItem>
+        <name>us</name>'''
+if "us_umlauts" in content:
+    print("evdev.xml: bereits vorhanden")
+elif needle in content:
+    content = content.replace(needle, block + needle, 1)
+    with open(p, "w") as f:
+        f.write(content)
+    print("evdev.xml: eingefuegt")
+else:
+    print("evdev.xml: FEHLER - needle nicht gefunden")
+    sys.exit(1)
+PYEOF
+
+    echo "Registriere Layout in $XKB_RULES_LST (sudo)..."
+    sudo python3 - "$XKB_RULES_LST" <<'PYEOF'
+import sys
+p = sys.argv[1]
+with open(p) as f:
+    content = f.read()
+needle = "  us              English (US)\n"
+if "us_umlauts" in content:
+    print("evdev.lst: bereits vorhanden")
+elif needle in content:
+    content = content.replace(needle, "  us_umlauts     English (US, German Umlauts)\n" + needle, 1)
+    with open(p, "w") as f:
+        f.write(content)
+    print("evdev.lst: eingefuegt")
+else:
+    print("evdev.lst: FEHLER - needle nicht gefunden")
+    sys.exit(1)
+PYEOF
 
     if command -v gsettings >/dev/null 2>&1; then
         gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us_umlauts')]"

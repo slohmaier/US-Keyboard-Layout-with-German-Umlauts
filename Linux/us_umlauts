@@ -1,0 +1,22 @@
+// US layout with German umlauts on AltGr (right Alt)
+// AltGr + a = ä, AltGr + u = ü, AltGr + o = ö, AltGr + s = ß, AltGr + e = €
+// AltGr + Shift + a/u/o = Ä/Ü/Ö, AltGr + Shift + s = ẞ
+//
+// Based on "us(intl)": that layout does NOT include "us(basic)"/"pc", so the
+// right Alt keeps working as the Level3 (AltGr) modifier instead of being
+// bound to Alt_R/Mod1. We keep the dead keys on the base level so that all
+// other US keys stay intact, and map the German umlauts on AltGr.
+partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "us(intl)"
+
+    name[Group1] = "English (US, German Umlauts)";
+
+    // German umlauts on AltGr (right Alt)
+    key <AD01> { [ q, Q, adiaeresis, Adiaeresis ] };
+    key <AD03> { [ e, E, EuroSign, EuroSign ] };
+    key <AD07> { [ u, U, udiaeresis, Udiaeresis ] };
+    key <AD09> { [ o, O, odiaeresis, Odiaeresis ] };
+    key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
+    key <AC02> { [ s, S, ssharp, U1E9E ] };
+};

@@ -12,13 +12,13 @@ This project provides keyboardlayouts and instructions to achieve:
  - CapsLock + Shift + u = Ü
  - CapsLock + Shift + o = Ö
 
-On Linux (Wayland) the layout uses **both Alt keys** as the modifier instead of CapsLock:
+On Linux (Wayland) the layout uses **AltGr** (right Alt) as the modifier instead of CapsLock, so CapsLock stays free for Orca:
 
- - Alt + a = ä, Alt + Shift + a = Ä
- - Alt + u = ü, Alt + Shift + u = Ü
- - Alt + o = ö, Alt + Shift + o = Ö
- - Alt + s = ß, Alt + Shift + s = ẞ
- - Alt + e = €
+ - AltGr + a = ä, AltGr + Shift + a = Ä
+ - AltGr + u = ü, AltGr + Shift + u = Ü
+ - AltGr + o = ö, AltGr + Shift + o = Ö
+ - AltGr + s = ß, AltGr + Shift + s = ẞ
+ - AltGr + e = €
 
 ## Install Instructions
 
@@ -34,7 +34,7 @@ The recommended way is the install script, which detects your display server and
 
 It detects the session via `WAYLAND_DISPLAY` (Wayland) or `DISPLAY` (X11):
 
- - **Wayland:** writes an XKB layout to `~/.config/xkb/symbols/us_umlauts` and registers it in GNOME via `gsettings`. Both Alt keys act as the modifier. Log out and back in for it to take effect.
+ - **Wayland:** installs an XKB layout system-wide (needs sudo), removes any stale `~/.config/xkb` copy (which libxkbcommon would otherwise prefer), and registers it in GNOME via `gsettings`. AltGr (right Alt) acts as the modifier, leaving CapsLock free for Orca. Log out and back in for it to take effect.
  - **X11:** copies `Linux/Xmodmap` to `~/.Xmodmap` and applies it with `xmodmap`. For autostart, add `xmodmap ~/.Xmodmap` to your session startup.
 
 Manual X11 setup:
