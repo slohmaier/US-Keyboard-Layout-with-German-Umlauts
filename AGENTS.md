@@ -20,7 +20,7 @@ This project provides keyboard layout configurations for multiple operating syst
 
 - **Windows:** CapsLock (AutoHotkey v1) or Alt (AutoHotkey v2)
 - **Linux X11:** CapsLock (Xmodmap, `Mode_switch`)
-- **Linux Wayland:** AltGr (right Alt) via XKB layout (`ISO_Level3_Shift`), leaving CapsLock free for Orca
+- **Linux Wayland:** both Alt keys via XKB layout (`ISO_Level3_Shift`), leaving CapsLock free for Orca
 - **macOS:** CapsLock (via PCKeyboardHack) or Alt
 
 ## File Structure by OS
@@ -34,7 +34,7 @@ This project provides keyboard layout configurations for multiple operating syst
 ### Linux (`Linux/`)
 - `install.sh` - Install script that detects Wayland vs X11 and installs the matching configuration
 - `Xmodmap` - X11 keyboard remapping using Mode_switch (CapsLock) as modifier
-- `us_umlauts` - XKB symbols file for the Wayland layout (AltGr as `ISO_Level3_Shift`)
+- `us_umlauts` - XKB symbols file for the Wayland layout (both Alt keys as `ISO_Level3_Shift`)
 
 ### Wayland XKB installation (important)
 
@@ -59,8 +59,8 @@ GNOME/Wayland resolves layout names through the system XKB rules in `/usr/share/
 - The AHK scripts use `GetKeyState("Shift", "P")` to detect Shift for capital umlauts
 - Linux Xmodmap uses keycodes 26, 30, 32, 38, 39 for e, u, o, a, s respectively
 - Xmodmap only works under X11; under Wayland it has no effect
-- The Wayland XKB layout is based on `us(intl)` and maps the right Alt (`<RALT>`) to `ISO_Level3_Shift` via `include "level3(ralt_switch)"`; the left Alt stays a normal modifier so Alt+Tab and the menu bar keep working
+- The Wayland XKB layout is based on `us(intl)` and maps both the left and right Alt (`<LALT>`, `<RALT>`) to `ISO_Level3_Shift` via `include "level3(ralt_switch)"` and `include "level3(lalt_switch)"`. Alt+Tab still works, but Alt + a/u/o/s/e now type umlauts instead of menu shortcuts.
 - XKB keysyms must use their internal names (`adiaeresis`, `udiaeresis`, `odiaeresis`, `ssharp`, `EuroSign`), not literal Unicode characters
-- The right Alt only stays a Level3 modifier if the layout does **not** get `pc`'s `Alt_R`/Mod1 binding; basing on `us(intl)` (which omits `us(basic)`) avoids this
+- The Alt keys only stay Level3 modifiers if the layout does **not** get `pc`'s `Alt_R`/Mod1 binding; basing on `us(intl)` (which omits `us(basic)`) avoids this
 - macOS keylayout uses XML with modifier maps and key actions
 - The Xmodmap file must stay idempotent: do not re-add `remove Lock = Caps_Lock`, since `keycode 66 = Mode_switch` already removes CapsLock from the lock modifier

@@ -12,7 +12,11 @@ xkb_symbols "basic" {
 
     name[Group1] = "English (US, German Umlauts)";
 
-    // German umlauts on AltGr (right Alt)
+    // Both Alt keys act as the Level3 (AltGr) modifier for the umlauts.
+    include "level3(ralt_switch)"
+    include "level3(lalt_switch)"
+
+    // German umlauts on Alt (either Alt key)
     key <AD01> { [ q, Q, adiaeresis, Adiaeresis ] };
     key <AD03> { [ e, E, EuroSign, EuroSign ] };
     key <AD07> { [ u, U, udiaeresis, Udiaeresis ] };
