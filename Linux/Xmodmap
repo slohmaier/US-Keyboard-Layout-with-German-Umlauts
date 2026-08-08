@@ -1,6 +1,6 @@
 ! Wie bekommt man CapsLock weg und deutsche Sonderzeichen auf US-Tastaturen.
 ! nerviges CapsLock abschalten
-remove Lock = Caps_Lock
+! (keycode 66 = Mode_switch entfernt Caps_Lock automatisch aus dem lock-Modifier)
 ! die CapsLock-Taste wird als Mode_Switch verwendet, aktiviert also
 ! das 3. (ohne shift) bzw. 4. (mit shift) Symbol
 keycode  66 = Mode_switch
