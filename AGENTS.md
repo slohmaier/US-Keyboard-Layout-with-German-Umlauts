@@ -18,7 +18,7 @@ This project provides keyboard layout configurations for multiple operating syst
 
 ## Modifier by OS
 
-- **Windows:** CapsLock (AutoHotkey v1) or Alt (AutoHotkey v2)
+- **Windows:** CapsLock or Alt (both AutoHotkey v2; also shipped as signed exes)
 - **Linux X11:** CapsLock (Xmodmap, `Mode_switch`)
 - **Linux Wayland:** both Alt keys via XKB layout (`ISO_Level3_Shift`), leaving CapsLock free for Orca
 - **macOS:** CapsLock (via PCKeyboardHack) or Alt
@@ -26,10 +26,23 @@ This project provides keyboard layout configurations for multiple operating syst
 ## File Structure by OS
 
 ### Windows (`Windows/`)
-- `US_German_Umlauts.ahk` - AutoHotkey v1 script using CapsLock as modifier
+- `US_German_Umlauts.ahk` - AutoHotkey v2 script using CapsLock as modifier
 - `US_German_Umlauts Alt.ahk` - AutoHotkey v2 script using Alt as modifier (also includes Ctrl+M for Menu key, Ctrl+Alt+Shift+S for screenshot)
 - `US_German_Umlauts.klc` - Microsoft Keyboard Layout Creator source file
 - `US_German_Umlauts.zip` - Compiled keyboard layout installer
+- `copy_to_startup.bat` - Copies a chosen script to the user's Startup folder
+- `build/` - Signed-executable tooling (see below)
+
+#### Signed executables (`Windows/build/`)
+
+`build/build.ps1` compiles the two `.ahk` scripts into standalone exes. The
+scripts are used **as-is** - the `uiAccess` + version-info Ahk2Exe directives
+are injected into a temporary copy, so the repository sources stay untouched.
+Output is unsigned in `build/output/`; signing is a separate step (no signing
+material lives in this repo). `build/installer/US_German_Umlauts.iss` is the
+Inno Setup script: it installs the chosen scheme into `%ProgramFiles%` (required
+for uiAccess) with an optional Startup autostart. Rebuild order: `build.ps1` ->
+sign exes -> ISCC -> sign installer.
 
 ### Linux (`Linux/`)
 - `install.sh` - Install script that detects Wayland vs X11 and installs the matching configuration

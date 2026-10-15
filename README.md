@@ -70,6 +70,17 @@ Note: Xmodmap only works under X11. Under Wayland it has no effect — use the X
  - The shortcut to the script should now be in the Startup folder
  - After reboot it should work, without reboot just Double-Click on the script file
 
+#### Alternative c (recommended - signed executable, no AutoHotkey needed)
+
+Download and run the signed installer from the releases page:
+https://github.com/slohmaier/US-Keyboard-Layout-with-German-Umlauts/releases
+
+During setup you pick ONE scheme - CapsLock or Alt - and only that tool is
+installed. It goes into `%ProgramFiles%\USGermanUmlauts` and runs as assistive
+technology with uiAccess, so it can also type into elevated windows and UAC
+prompts. AutoHotkey is **not** required on the target machine. Autostart at
+login is enabled by default; uninstalling removes the tool and its autostart.
+
 
 ### macOS
 

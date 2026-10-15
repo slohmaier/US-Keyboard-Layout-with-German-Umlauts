@@ -1,0 +1,24 @@
+# Build output. Signed binaries are published as GitHub release assets, never committed.
+/Windows/build/output/
+/Windows/build/installer/output/
+*.exe
+*.dll
+
+# Third-party build tools fetched at build time
+/Windows/build/.tools/
+
+# NEVER commit certificate or private-key material.
+*.pfx
+*.p12
+*.cer
+*.crt
+*.key
+*.pem
+*.snk
+*.enc
+*.signed
+
+# OS / editor cruft
+Thumbs.db
+desktop.ini
+.vscode/
